@@ -6,7 +6,7 @@ package main
 
 import (
 	"errors"
-	"fmt"
+	"sync"
 )
 
 // Change these boolean values to control whether you see
@@ -26,18 +26,29 @@ type ValueReader interface {
 
 // Make any required changes to the Cache struct.
 type Cache struct {
+	lookup map[Key]Value
+	lock   sync.RWMutex
 }
 
 func NewCache() *Cache {
-	return &Cache{}
+	return &Cache{lookup: make(map[Key]Value)}
 }
 
 func (c *Cache) Set(k Key, v Value) {
-	fmt.Println("Set not implemented")
+	c.lock.Lock()
+	defer c.lock.Unlock()
+	c.lookup[k] = v
 }
 
 func (c *Cache) Get(k Key) (Value, error) {
-	return Value(""), errors.New("Get not implemented")
+	c.lock.Lock()
+	defer c.lock.Unlock()
+
+	v, ok := c.lookup[k]
+	if !ok {
+		return Value(""), errors.New("key not found")
+	}
+	return v, nil
 }
 
 func WriteValues(w ValueWriter, keys []Key, values []Value) {

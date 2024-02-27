@@ -7,6 +7,20 @@ import (
 	"time"
 )
 
+func test_maze() {
+	// This is how your code will be called.
+	// Your answer should be the number of paths with the given cost.
+	// You can edit this code to try different testing cases.
+	cost := 8
+	maze := NewMaze([][]int{
+		{1, 2, 1},
+		{6, 1, 1},
+		{4, 3, 3},
+	})
+	learnerResult := countPaths(maze, 0, 0, cost)
+	fmt.Println(learnerResult)
+}
+
 func test_cache() {
 	// This is how your code will be called.
 	// Your answer should contain the newest key value pairs.
@@ -16,6 +30,11 @@ func test_cache() {
 	n := NewCache()
 	WriteValues(n, keys, values)
 	learnerResult, learnerError := ReadValues(n, keys)
+	if learnerError != nil {
+		fmt.Println(learnerError.Error())
+	} else {
+		fmt.Println(learnerResult)
+	}
 }
 
 func test_rolling_mean() {

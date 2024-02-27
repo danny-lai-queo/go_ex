@@ -6,7 +6,11 @@ package main
 // )
 
 func main() {
-	test_rolling_mean()
+	test_maze()
+
+	// test_cache()
+
+	// test_rolling_mean()
 
 	// ary := [3]int{11, 12, 13}
 
